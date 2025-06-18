@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skull Tee | Revelvery</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+ <header class="navbar">
+  <div class="logo">REVELVERY</div>
+
+  <!-- Hamburger Icon (mobile only) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Nav Links -->
+  <nav class="nav-links" id="nav-links">
+    <a href="index.html">Home</a>
+    <a href="tshirts.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="cart.html" class="cart-container">
+      <img src="cart.svg" alt="Cart" class="cart-icon">
+      <span class="cart-count" id="cart-count">0</span>
+    </a>
+  </nav>
+</header>
+<script>
+  // Hamburger toggle
+  const hamburger = document.getElementById("hamburger");
+  const navLinks = document.getElementById("nav-links");
+
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+
+  // Cart badge update
+  function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let totalItems = 0;
+    cart.forEach(item => totalItems += item.quantity);
+    const badge = document.getElementById("cart-count");
+    if (badge) badge.textContent = totalItems;
+  }
+
+  updateCartBadge();
+</script>
+
+<script>
+  function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let totalItems = 0;
+    cart.forEach(item => totalItems += item.quantity);
+    const badge = document.getElementById("cart-count");
+    if (badge) badge.textContent = totalItems;
+  }
+
+  updateCartBadge();
+</script>
+
+    </nav>
+  </header>
+
+  <!-- Product Detail Section -->
+  <section class="product-detail">
+    <div class="product-image">
+      <img src="a.jpg" alt="Skull Tee">
+    </div>
+
+    <div class="product-info-detail">
+      <h1>Skull Black Tee</h1>
+      <p class="price">₹999</p>
+      <p class="desc">Made for the ones who don’t speak — they wear. Oversized black tee with skull print, soft cotton feel, dark edge energy. Street fit, unisex.</p>
+
+      <div class="sizes">
+        <p>Select Size:</p>
+        <div class="size-options">
+          <button>S</button>
+          <button>M</button>
+          <button>L</button>
+          <button>XL</button>
+        </div>
+      </div>
+
+      <div class="quantity">
+        <p>Quantity:</p>
+        <input type="number" id="quantity" min="1" max="10" value="1">
+      </div>
+
+      <a href="#" class="btn">Add to Cart</a>
+    </div>
+  </section>
+
+  <!-- Popup -->
+  <div id="popup" class="popup">🛒 Added to Cart</div>
+
+  <!-- JavaScript -->
+  <script src="cart.js"></script>
+</body>
+</html>

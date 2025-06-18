@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REVELVERY – Shop</title>
+  <link rel="stylesheet" href="tshirts.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+ <header class="navbar">
+  <div class="logo">REVELVERY</div>
+
+  <!-- Hamburger Icon (mobile only) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Nav Links -->
+  <nav class="nav-links" id="nav-links">
+    <a href="index.html">Home</a>
+    <a href="tshirts.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="cart.html" class="cart-container">
+      <img src="cart.svg" alt="Cart" class="cart-icon">
+      <span class="cart-count" id="cart-count">0</span>
+    </a>
+  </nav>
+</header>
+<script>
+  // Hamburger toggle
+  const hamburger = document.getElementById("hamburger");
+  const navLinks = document.getElementById("nav-links");
+
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+
+  // Cart badge update
+  function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let totalItems = 0;
+    cart.forEach(item => totalItems += item.quantity);
+    const badge = document.getElementById("cart-count");
+    if (badge) badge.textContent = totalItems;
+  }
+
+  updateCartBadge();
+</script>
+
+<script>
+  function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let totalItems = 0;
+    cart.forEach(item => totalItems += item.quantity);
+    const badge = document.getElementById("cart-count");
+    if (badge) badge.textContent = totalItems;
+  }
+
+  updateCartBadge();
+</script>
+
+></a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Our Drop</h1>
+      <p>Fashion in Every Fibre, Cold as Ice.</p>
+    </div>
+  </section>
+
+  <!-- Product Showcase -->
+  <section class="products">
+    <div class="product-card">
+     <a href="product-skull.html">
+  <img src="a.jpg" alt="Skull Tee">
+</a>
+
+      <h2>Black Skull Tee</h2>
+      <p class="price">₹999</p>
+    </div>
+    <div class="product-card">
+      <a href="product-skull.html">
+  <img src="b.jpg" alt="SpiderWeb Tee">
+</a>
+
+      <h2>Spiderweb Print</h2>
+      <p class="price">₹699</p>
+    </div>
+    <!-- Add more pro
+<script>
+  function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let totalItems = 0;
+    cart.forEach(item => totalItems += item.quantity);
+    const badge = document.getElementById("cart-count");
+    if (badge) badge.textContent = totalItems;
+  }
+
+  updateCartBadge();
+</script>

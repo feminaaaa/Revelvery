@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thank You | Revelvery</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: black;
+      color: #f0f0f0;
+      font-family: 'Oswald', sans-serif;
+      text-align: center;
+      padding: 100px 20px;
+      overflow-x: hidden;
+    }
+
+    .thankyou-container {
+      max-width: 600px;
+      margin: auto;
+      background: #111;
+      border: 1px solid #333;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+      animation: fadeIn 1.5s ease-out;
+    }
+
+    h1 {
+      font-family: 'Anton', sans-serif;
+      font-size: 3rem;
+      margin-bottom: 10px;
+      text-shadow: 0 0 15px #fff;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin: 10px 0;
+    }
+
+    .btn {
+      margin-top: 30px;
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #fff;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #ff2e2e;
+      color: white;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="thankyou-container">
+    <h1>THANK YOU!</h1>
+    <p>Your order has been placed successfully.</p>
+    <p><strong>Order ID:</strong> <span id="order-id">Loading...</span></p>
+    <p><strong>Placed on:</strong> <span id="timestamp">Loading...</span></p>
+    <a href="index.html" class="btn">Return to Home</a>
+    <a href="tshirts.html" class="btn">Shop More</a>
+  </div>
+
+  <script>
+    // Try to read from localStorage
+    const orderId = localStorage.getItem("lastOrderId") || "N/A";
+    const timestamp = localStorage.getItem("lastTimestamp") || "N/A";
+
+    document.getElementById("order-id").textContent = orderId;
+    document.getElementById("timestamp").textContent = timestamp;
+  </script>
+
+</body>
+</html>

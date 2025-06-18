@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout | Revelvery</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+<header class="navbar">
+  <div class="logo">REVELVERY</div>
+
+  <!-- Hamburger Icon (mobile only) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Nav Links -->
+  <nav class="nav-links" id="nav-links">
+    <a href="index.html">Home</a>
+    <a href="tshirts.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="cart.html" class="cart-container">
+      <img src="cart.svg" alt="Cart" class="cart-icon">
+      <span class="cart-count" id="cart-count">0</span>
+    </a>
+  </nav>
+</header>
+<script>
+  // Hamburger toggle
+  const hamburger = document.getElementById("hamburger");
+  const navLinks = document.getElementById("nav-links");
+
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+
+  // Cart badge update
+  function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let totalItems = 0;
+    cart.forEach(item => totalItems += item.quantity);
+    const badge = document.getElementById("cart-count");
+    if (badge) badge.textContent = totalItems;
+  }
+
+  updateCartBadge();
+</script>
+
+<script>
+  function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let totalItems = 0;
+    cart.forEach(item => totalItems += item.quantity);
+    const badge = document.getElementById("cart-count");
+    if (badge) badge.textContent = totalItems;
+  }
+
+  updateCartBadge();
+</script>
+
+    </nav>
+  </header>
+
+  <!-- Checkout Section -->
+  <section class="checkout-section">
+    <h1>Checkout</h1>
+
+    <!-- Cart Summary -->
+    <div class="cart-summary" id="cart-summary"></div>
+
+    <!-- Form -->
+    <form id="checkout-form" action="https://formspree.io/f/mdkzdbpg" method="POST">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="_replyto" required />
+
+      <label for="address">Address</label>
+      <textarea id="address" name="address" rows="4" required></textarea>
+
+      <label for="delivery">Delivery Speed</label>
+      <select id="delivery" name="delivery">
+        <option value="standard">Standard (5-7 Days)</option>
+        <option value="express">Express (2-3 Days)</option>
+        <option value="overnight">Overnight (Next Day)</option>
+      </select>
+
+      <label for="payment">Payment Mode</label>
+      <select id="payment" name="payment">
+        <option value="cod">Cash on Delivery</option>
+        <option value="upi">UPI</option>
+        <option value="card">Credit/Debit Card</option>
+      </select>
+
+      <!-- Hidden Fields for Order ID, Timestamp, Cart, and Customer Email -->
+      <input type="hidden" id="cart-data" name="cart" />
+      <input type="hidden" id="order-id" name="order_id" />
+      <input type="hidden" id="timestamp" name="timestamp" />
+      <input type="hidden" id="customer-copy" name="_cc" />
+
+      <button type="submit" class="btn">Place Order</button>
+      <p id="order-confirmation" class="order-confirmation"></p>
+    </form>
+  </section>
+
+  <!-- Script -->
+  <script>
+    // Cart summary
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartSummary = document.getElementById("cart-summary");
+    const cartInput = document.getElementById("cart-data");
+
+    if (cart.length === 0) {
+      cartSummary.innerHTML = "<p class='empty'>Your cart is empty.</p>";
+    } else {
+      let summaryHTML = "<h2>Order Summary</h2><ul>";
+      let total = 0;
+
+      cart.forEach(item => {
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+        summaryHTML += `
+          <li>${item.name} (Size: ${item.size}, Qty: ${item.quantity}) – ₹${subtotal}</li>
+        `;
+      });
+
+      summaryHTML += `</ul><p><strong>Total:</strong> ₹${total}</p>`;
+      cartSummary.innerHTML = summaryHTML;
+
+      cartInput.value = JSON.stringify(cart);
+    }
+
+    // Form logic
+    const form = document.getElementById("checkout-form");
+    const confirmation = document.getElementById("order-confirmation");
+
+    form.addEventListener("submit", (e) => {
+      // Generate Order ID + Timestamp
+      const now = new Date();
+      const orderId = "RVL-" + now.toISOString().slice(0, 10).replace(/-/g, "") + "-" + Math.floor(Math.random() * 9000 + 1000);
+      const timestamp = now.toLocaleString();
+      localStorage.setItem("lastOrderId", orderId);
+localStorage.setItem("lastTimestamp", timestamp);
+
+// Redirect to thankyou page
+setTimeout(() => {
+  window.location.href = "thankyou.html";
+}, 500);
+
+
+      // Set hidden fields
+      document.getElementById("order-id").value = orderId;
+      document.getElementById("timestamp").value = timestamp;
+      document.getElementById("customer-copy").value = document.getElementById("email").value;
+
+      // Clear localStorage cart after a moment (to allow Formspree to read it first)
+      setTimeout(() => localStorage.removeItem("cart"), 2000);
+
+      // Success message
+      confirmation.textContent = `✅ Order placed! ID: ${orderId}`;
+      confirmation.style.color = "#0f0";
+    });
+  </script>
+
+</body>
+</html>
+

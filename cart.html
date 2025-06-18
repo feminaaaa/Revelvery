@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cart | Revelvery</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+<header class="navbar">
+  <div class="logo">REVELVERY</div>
+
+  <!-- Hamburger Icon (mobile only) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Nav Links -->
+  <nav class="nav-links" id="nav-links">
+    <a href="index.html">Home</a>
+    <a href="tshirts.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="cart.html" class="cart-container">
+      <img src="cart.svg" alt="Cart" class="cart-icon">
+      <span class="cart-count" id="cart-count">0</span>
+    </a>
+  </nav>
+</header>
+<script>
+  // Hamburger toggle
+  const hamburger = document.getElementById("hamburger");
+  const navLinks = document.getElementById("nav-links");
+
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+
+  // Cart badge update
+  function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let totalItems = 0;
+    cart.forEach(item => totalItems += item.quantity);
+    const badge = document.getElementById("cart-count");
+    if (badge) badge.textContent = totalItems;
+  }
+
+  updateCartBadge();
+</script>
+
+
+  <!-- Cart Page -->
+  <section class="cart-section">
+    <h1>Your Cart</h1>
+    <div id="cart-items" class="cart-items"></div>
+
+    <div class="cart-total">
+      <p>Total: ₹<span id="total-amount">0</span></p>
+      <a href="checkout.html" class="btn checkout-btn">Proceed to Checkout</a>
+    </div>
+  </section>
+
+  <!-- JS Logic -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cartItemsContainer = document.getElementById("cart-items");
+      const totalAmount = document.getElementById("total-amount");
+
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      function updateCart() {
+        cartItemsContainer.innerHTML = "";
+        let total = 0;
+
+        if (cart.length === 0) {
+          cartItemsContainer.innerHTML = "<p class='empty'>Your cart is empty.</p>";
+          totalAmount.textContent = "0";
+          return;
+        }
+
+        cart.forEach((item, index) => {
+          const itemTotal = item.price * item.quantity;
+          total += itemTotal;
+
+          const itemHTML = `
+            <div class="cart-item">
+              <img src="${item.image}" alt="${item.name}">
+              <div class="cart-details">
+                <h2>${item.name}</h2>
+                <p>Size: ${item.size}</p>
+                <p>Quantity: ${item.quantity}</p>
+                <p>Price: ₹${item.price} x ${item.quantity} = ₹${itemTotal}</p>
+                <button class="remove-btn" data-index="${index}">Remove</button>
+              </div>
+            </div>
+          `;
+          cartItemsContainer.insertAdjacentHTML("beforeend", itemHTML);
+        });
+
+        totalAmount.textContent = total;
+      }
+
+      cartItemsContainer.addEventListener("click", e => {
+        if (e.target.classList.contains("remove-btn")) {
+          const index = e.target.getAttribute("data-index");
+          cart.splice(index, 1);
+          localStorage.setItem("cart", JSON.stringify(cart));
+          updateCart();
+        }
+      });
+
+      updateCart();
+    });
+  </script>
+<script>
+  function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let totalItems = 0;
+    cart.forEach(item => totalItems += item.quantity);
+    const badge = document.getElementById("cart-count");
+    if (badge) badge.textContent = totalItems;
+  }
+
+  updateCartBadge();
+</script>
+
+</body>
+</html>

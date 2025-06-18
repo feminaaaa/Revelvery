@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About | Revelvery</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+ <header class="navbar">
+  <div class="logo">REVELVERY</div>
+
+  <!-- Hamburger Icon (mobile only) -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Nav Links -->
+  <nav class="nav-links" id="nav-links">
+    <a href="index.html">Home</a>
+    <a href="tshirts.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="cart.html" class="cart-container">
+      <img src="cart.svg" alt="Cart" class="cart-icon">
+      <span class="cart-count" id="cart-count">0</span>
+    </a>
+  </nav>
+</header>
+<script>
+  // Hamburger toggle
+  const hamburger = document.getElementById("hamburger");
+  const navLinks = document.getElementById("nav-links");
+
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+
+  // Cart badge update
+  function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let totalItems = 0;
+    cart.forEach(item => totalItems += item.quantity);
+    const badge = document.getElementById("cart-count");
+    if (badge) badge.textContent = totalItems;
+  }
+
+  updateCartBadge();
+</script>
+
+<script>
+  function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let totalItems = 0;
+    cart.forEach(item => totalItems += item.quantity);
+    const badge = document.getElementById("cart-count");
+    if (badge) badge.textContent = totalItems;
+  }
+
+  updateCartBadge();
+</script>
+
+    </nav>
+  </header>
+
+  <!-- About Section -->
+  <section class="about-section">
+    <h1>About Revelvery</h1>
+    <p>
+      <strong>Revelvery</strong> was born out of rebellion — not against rules, but against silence.  
+      Our clothes speak louder than voices, telling stories of grit, art, street culture, and identity.
+    </p>
+    <p>
+      We aren’t just a clothing brand. We are an idea. A movement.  
+      Every thread is stitched with boldness, every design a symbol of self-expression.
+    </p>
+    <p>
+      From dark aesthetics to limited-edition drops, Revelvery is for the misfits, the quiet loud, and those who choose to rule without noise.
+    </p>
+    <p>
+      Designed in <strong>India</strong>, inspired by the streets, and made for the world.
+    </p>
+  </section>
+
+</body>
+</html>
